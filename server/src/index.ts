@@ -1,26 +1,24 @@
+import http from 'http';
 import express from 'express';
-import dotevn from 'dotenv';
-
+import loggingHandler from './middlewares/loggingHandler';
 import connectDB from './configs/database';
-
-dotevn.config();
+import { SERVER_ENV } from './configs/env';
 
 const server = express();
-const port = process.env.PORT || 3000;
-
-server.get('/', (req, res) => {
-	res.send('Hello World!')
-})
+let httpServer: ReturnType<typeof http.createServer>;
 
 const start = async () => {
-    try {
-        await connectDB()
-        server.listen(port, () => {
-            console.log(`Server running on http://localhost:${port}`)
-        })
-    } catch (error) {
-        console.log(error)
-    }
+    server.use(express.urlencoded({ extended: true }));
+    server.use(express.json());
+    server.use(loggingHandler);
+
+    await connectDB();
+    console.log("Connected to database");
+
+    httpServer = http.createServer(server);
+    httpServer.listen(SERVER_ENV.PORT, () => {
+        console.log(`Server started on ${SERVER_ENV.HOST}:${SERVER_ENV.PORT}`);
+    })
 }
 
 start()
