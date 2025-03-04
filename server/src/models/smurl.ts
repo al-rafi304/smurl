@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema, Document } from "mongoose";
-import { URL_TTL } from "../configs/env";
+import * as env from '../env';
 
 interface ISmurl extends Document {
     original: string;
@@ -19,7 +19,7 @@ const SmurlSchema = new Schema<ISmurl>(
         },
         expiresAt: {
             type: Date,
-            default: () => new Date(Date.now() + URL_TTL * 1000),
+            default: () => new Date(Date.now() + env.URL_TTL * 1000),
             index: { expireAfterSeconds: 0 }
         }
 

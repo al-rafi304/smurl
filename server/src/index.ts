@@ -1,8 +1,8 @@
 import http from 'http';
 import express from 'express';
 import loggingHandler from './middlewares/loggingHandler';
-import connectDB, { initCounter } from './configs/database';
-import { SERVER_ENV } from './configs/env';
+import connectDB, { initCounter } from './database';
+import * as env from './env';
 
 const server = express();
 let httpServer: ReturnType<typeof http.createServer>;
@@ -20,8 +20,8 @@ const start = async () => {
     await initCounter();
 
     httpServer = http.createServer(server);
-    httpServer.listen(SERVER_ENV.PORT, () => {
-        console.log(`Server started on ${SERVER_ENV.HOST}:${SERVER_ENV.PORT}`);
+    httpServer.listen(env.SERVER_ENV.PORT, () => {
+        console.log(`Server started on ${env.SERVER_ENV.HOST}:${env.SERVER_ENV.PORT}`);
     })
 }
 

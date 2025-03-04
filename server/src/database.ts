@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import CounterModel from '../models/counter';
+import CounterModel from './models/counter';
 
 const connectDB = async () => {
   try {

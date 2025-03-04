@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Smurl from "../models/smurl";
-import { CreateSmurlDto } from "../dtos/create-smurl.dto";
+import { CreateSmurlDto } from "../dtos";
 import { validationResult } from "express-validator";
 import { generateId } from "../utils";
 

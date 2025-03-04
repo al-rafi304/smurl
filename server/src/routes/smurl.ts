@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createSmurl } from "../controllers/shortUrl";
-import { createSmurlValidator } from "../validators/smurl.validator";
+import { createSmurlValidator } from "../validators";
 
 const router = Router();
 
