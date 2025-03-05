@@ -1,7 +1,7 @@
 import http from 'http';
 import express from 'express';
 import loggingHandler from './middlewares/loggingHandler';
-import connectDB, { initCounter } from './database';
+import connectDB from './database';
 import * as env from './env';
 
 const server = express();
@@ -17,7 +17,6 @@ const start = async () => {
     server.use('/api/v1', smurlRoutes);
 
     await connectDB();
-    await initCounter();
 
     httpServer = http.createServer(server);
     httpServer.listen(env.SERVER_ENV.PORT, () => {

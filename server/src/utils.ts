@@ -1,26 +1,14 @@
-import CounterModel from "./models/counter"
+import * as env from "./env";
+import { customAlphabet } from "nanoid";
+import Smurl from "./models/smurl";
 
-const charsetB58: string[] = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".split('')
+const nanoid = customAlphabet(env.URL_ALPHABETS, env.URL_LENGTH);
 
-const encodeB58 = (num: number) => {
-    let rem: number;
-    let encoded: string[] = [];
-
-    while (num != 0) {
-        rem = num % 58;
-        num = Math.floor(num / 58);
-        encoded.push(charsetB58[rem])
+export const generateId = async (): Promise<string> => {
+    const id = nanoid();
+    const exists = await Smurl.exists({ short: id })
+    if (exists) {
+        return generateId();
     }
-
-    return encoded.reverse().join('')
-}
-
-export const generateId = async () => {
-    const counter = await CounterModel.findOneAndUpdate(
-        {},
-        { $inc: { seq: 1 } }, // Atomic increment
-        { new: true, upsert: true, returnDocument: "after" }
-    );
-
-    return encodeB58(counter.seq);
+    return id;
 }
