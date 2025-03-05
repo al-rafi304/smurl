@@ -1,3 +1,3 @@
 export interface CreateSmurlDto {
-    original: String;
+    target: String;
 }

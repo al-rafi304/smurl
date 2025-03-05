@@ -1,9 +1,10 @@
 import { body } from 'express-validator';
 
 export const createSmurlValidator = [
-    body('original')
+    body('target')
         .exists()
-        .withMessage("Original URL is missing")
+        .withMessage("Target URL is missing")
         .isString()
+        .withMessage("Target URL has to be a string")
         .trim()
 ]

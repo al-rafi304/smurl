@@ -2,18 +2,18 @@ import mongoose, { Model, Schema, Document } from "mongoose";
 import * as env from '../env';
 
 interface ISmurl extends Document {
-    original: string;
-    short: string;
+    target: string;
+    address: string;
     expiresAt: Date;
 }
 
 const SmurlSchema = new Schema<ISmurl>(
     {
-        original: {
+        target: {
             type: String,
             required: true
         },
-        short: {
+        address: {
             type: String,
             required: true
         },
