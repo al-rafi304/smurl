@@ -1,4 +1,5 @@
 import { body, param } from 'express-validator';
+import * as utils from './utils';
 
 export const createSmurlValidator = [
     body('target')
@@ -7,6 +8,7 @@ export const createSmurlValidator = [
         .isString()
         .withMessage("Target URL has to be a string")
         .trim()
+        .customSanitizer(utils.addProtocol)
 ]
 
 export const redirectSmurlValidator = [

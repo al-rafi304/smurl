@@ -12,3 +12,8 @@ export const generateAddress = async (): Promise<string> => {
     }
     return id;
 }
+
+export const addProtocol = (url: string): string => {
+    const validUrl = !url.startsWith('http') || !url.startsWith('https') ? 'http://' + url : url
+    return validUrl
+}
