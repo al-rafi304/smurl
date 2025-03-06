@@ -1,5 +1,6 @@
 import http from 'http';
 import express from 'express';
+import 'express-async-errors';
 import loggingHandler from './middlewares/loggingHandler';
 import connectDB from './database';
 import * as env from './env';

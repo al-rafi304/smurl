@@ -8,44 +8,27 @@ export const createSmurl = async (
     req: Request<{}, {}, CreateSmurlDto>,
     res: Response
 ) => {
-    try {
-        const valResult = validationResult(req);
-        if (!valResult.isEmpty()) {
-            res.status(400).json({ error: valResult.array()[0].msg });
-            return;
-        }
-        
-        const targetUrl = req.body.target;
-        const smurl = await Smurl.create({
-            target: targetUrl,
-            address: await generateAddress()
-        });
-        
-        res.json({ smurl: smurl.address });
-    } catch (err: any) {
-        res.status(500).json({ error: err.message })
-    }
+
+    const targetUrl = req.body.target;
+    const smurl = await Smurl.create({
+        target: targetUrl,
+        address: await generateAddress()
+    });
+
+    res.json({ smurl: smurl.address });
+
 }
 
 export const redirectSmurl = async (
     req: Request<RedirectSmurlDto>,
     res: Response
 ) => {
-    try {
 
-        const paramVal = validationResult(req);
-        if (!paramVal.isEmpty()) {
-            res.status(400).json({ error: paramVal.array()[0].msg })
-        }
-        
-        const smurl = await Smurl.findOne({ address: req.params.address })
-        if (!smurl) {
-            res.status(404).json({ error: "Invalid url" });
-            return;
-        }
-        res.redirect(smurl.target);
-
-    } catch (err: any) {
-        res.status(500).json({ error: err.message })
+    const smurl = await Smurl.findOne({ address: req.params.address })
+    if (!smurl) {
+        res.status(404).json({ error: "Invalid url" });
+        return;
     }
+    res.redirect(smurl.target);
+
 }

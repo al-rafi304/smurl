@@ -1,10 +1,18 @@
 import { Router } from "express";
 import { createSmurl, redirectSmurl } from "../controllers/shortUrl";
-import { createSmurlValidator, redirectSmurlValidator } from "../validators";
+import * as validator from "../validators";
 
 const router = Router();
 
-router.route('/').post(createSmurlValidator, createSmurl);
-router.route('/:address').get(redirectSmurlValidator, redirectSmurl)
+router.route('/').post(
+    validator.createSmurlValidator, 
+    createSmurl
+);
+
+router.route('/:address').get(
+    validator.redirectSmurlValidator,
+    validator.validate,
+    redirectSmurl,
+);
 
 export default router;
