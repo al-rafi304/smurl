@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 
 export const createSmurlValidator = [
     body('target')
@@ -7,4 +7,10 @@ export const createSmurlValidator = [
         .isString()
         .withMessage("Target URL has to be a string")
         .trim()
+]
+
+export const redirectSmurlValidator = [
+    param('address')
+        .notEmpty()
+        .withMessage("Invalid url address code")
 ]
