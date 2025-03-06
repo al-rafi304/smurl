@@ -11,7 +11,7 @@ export const createSmurl = async (
     try {
         const valResult = validationResult(req);
         if (!valResult.isEmpty()) {
-            res.status(400).json({ errors: valResult.array() });
+            res.status(400).json({ error: valResult.array()[0].msg });
             return;
         }
         
@@ -32,6 +32,11 @@ export const redirectSmurl = async (
     res: Response
 ) => {
     try {
+
+        const paramVal = validationResult(req);
+        if (!paramVal.isEmpty()) {
+            res.status(400).json({ error: paramVal.array()[0].msg })
+        }
         
         const smurl = await Smurl.findOne({ address: req.params.address })
         if (!smurl) {
